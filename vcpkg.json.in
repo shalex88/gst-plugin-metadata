@@ -1,0 +1,6 @@
+{
+  "name": "gst-plugin-metadata",
+  "version": "@VERSION@",
+  "dependencies": [
+  ]
+}
