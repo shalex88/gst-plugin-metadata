@@ -1,7 +1,7 @@
 #include <gst/gst.h>
-#include <config.h>
-#include "extractor/gstmetadataextractor.h"
-#include "injector/gstmetadatainjector.h"
+#include "config.h"
+#include "injector/gst_metadata_injector.h"
+#include "extractor/gst_metadata_extractor.h"
 
 static gboolean metadata_init(GstPlugin* metadata) {
     // Register each element with GStreamer

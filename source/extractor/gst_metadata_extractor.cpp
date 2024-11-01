@@ -1,5 +1,6 @@
-#include "gstmetadataextractor.h"
 #include <gst/gst.h>
+#include "metadata/gst_meta.h"
+#include "gst_metadata_extractor.h"
 
 GST_DEBUG_CATEGORY_STATIC(gst_metadata_extractor_debug);
 #define GST_CAT_DEFAULT gst_metadata_extractor_debug
@@ -163,6 +164,14 @@ static GstFlowReturn gst_metadata_extractor_chain(GstPad* pad, GstObject* parent
     if (filter->silent == FALSE)
         g_print("%s: frame %d\n", gst_element_get_name(GST_ELEMENT(filter)), frame_counter++);
 
-    /* just push out the incoming buffer without touching it */
+    // Get metadata from the buffer
+    auto metadata = gst_buffer_get_buffer_info_meta(buf);
+    if(metadata) {
+        g_print("%s: [%s]\n", gst_element_get_name(GST_ELEMENT(filter)), metadata->info.description);
+    } else {
+        g_print("%s: []\n", gst_element_get_name(GST_ELEMENT(filter)));
+    }
+
+    // Just push out the incoming buffer without touching it
     return gst_pad_push(filter->srcpad, buf);
 }
