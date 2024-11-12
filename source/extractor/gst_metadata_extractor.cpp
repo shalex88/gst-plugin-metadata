@@ -20,7 +20,7 @@ enum {
  *
  * describe the real formats here.
  */
-static GstStaticPadTemplate sink_factory = GST_STATIC_PAD_TEMPLATE("sink",
+static GstStaticPadTemplate sink_factory = GST_STATIC_PAD_TEMPLATE("video_sink",
                                                                    GST_PAD_SINK,
                                                                    GST_PAD_ALWAYS,
                                                                    GST_STATIC_CAPS ("ANY")
@@ -161,15 +161,13 @@ static GstFlowReturn gst_metadata_extractor_chain(GstPad* pad, GstObject* parent
     GstMetadataExtractor* filter = GST_METADATAEXTRACTOR(parent);
     static int frame_counter{};
 
-    if (filter->silent == FALSE)
-        g_print("%s: frame %d\n", gst_element_get_name(GST_ELEMENT(filter)), frame_counter++);
+    // if (filter->silent == FALSE)
+    //     g_print("%s: frame %d\n", gst_element_get_name(GST_ELEMENT(filter)), frame_counter++);
 
     // Get metadata from the buffer
     auto metadata = gst_buffer_get_buffer_info_meta(buf);
     if(metadata) {
         g_print("%s: [%s]\n", gst_element_get_name(GST_ELEMENT(filter)), metadata->info.description);
-    } else {
-        g_print("%s: []\n", gst_element_get_name(GST_ELEMENT(filter)));
     }
 
     // Just push out the incoming buffer without touching it
